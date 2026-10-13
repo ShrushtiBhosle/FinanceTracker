@@ -1,0 +1,44 @@
+@model IEnumerable<FinanceTracker.Models.Expense>
+
+@{
+    ViewData["Title"] = "Expenses";
+}
+
+<h1>My Expenses</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add Expense</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var expense in Model)
+        {
+            <tr>
+                <td>@expense.Title</td>
+                <td>₹@expense.Amount</td>
+                <td>@expense.Category</td>
+                <td>@expense.Date.ToShortDateString()</td>
+                <td>@expense.Description</td>
+                <td>
+                    <a asp-action="Delete"
+                       asp-route-id="@expense.Id"
+                       class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

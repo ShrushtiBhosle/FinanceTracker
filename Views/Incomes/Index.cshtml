@@ -1,0 +1,61 @@
+@model IEnumerable<FinanceTracker.Models.Income>
+
+@{
+    ViewData["Title"] = "My Income";
+}
+
+<div class="container mt-4">
+    <h1>💰 My Income</h1>
+
+    <p class="text-muted">Manage your salary and other earnings.</p>
+
+    <a asp-action="Create" class="btn btn-success mb-3">
+        + Add Income
+    </a>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Source</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var income in Model)
+                {
+                    <tr>
+                        <td>@income.Source</td>
+                        <td>₹@income.Amount.ToString("N2")</td>
+                        <td>@income.Date.ToString("dd-MM-yyyy")</td>
+                        <td>@income.Description</td>
+                        <td>
+                            <form asp-action="Delete"
+                                  asp-route-id="@income.Id"
+                                  method="post"
+                                  onsubmit="return confirm('Delete this income record?');">
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">
+                        No income records yet. Add your first income!
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
